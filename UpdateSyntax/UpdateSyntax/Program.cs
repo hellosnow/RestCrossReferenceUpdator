@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Text.RegularExpressions;
+    using System.Web;
 
     class Program
     {
@@ -27,10 +28,12 @@
 
                 var newContent = rx.Replace(content, (m) =>
                 {
-                    var ymlPath = Path.Combine(rootPath, "docs-ref-autogen", m.Groups[2].Value);
+                    var ymlPath = HttpUtility.UrlDecode(Path.Combine(rootPath, "docs-ref-autogen", m.Groups[2].Value));
+                    
                     if (!File.Exists(ymlPath))
                     {
                         count++;
+                        Console.WriteLine($"\t@{ymlPath} cannot be found in {file}");
                         return m.Value;
                         //throw new FileNotFoundException($"Yaml path {ymlPath} not exists.");
                     }
@@ -59,6 +62,7 @@
 
                         var returnValue = $"[{m.Groups[1].Value}](xref:{uid})";
                         return returnValue;
+                        //return $"@{uid}";
                     }
                 });
 
