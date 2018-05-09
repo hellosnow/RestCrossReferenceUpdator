@@ -33,7 +33,7 @@
                     if (!File.Exists(ymlPath))
                     {
                         count++;
-                        Console.WriteLine($"\t@{ymlPath} cannot be found in {file}");
+                        Console.WriteLine($"\tIn {file}, {m} cannot be found.");
                         return m.Value;
                         //throw new FileNotFoundException($"Yaml path {ymlPath} not exists.");
                     }
@@ -69,7 +69,7 @@
                 if (!string.IsNullOrEmpty(uid))
                 {
                     File.WriteAllText(file, newContent);
-                    Console.WriteLine($"Updating {file}");
+                    //Console.WriteLine($"Updating {file}");
                 }
             }
             Console.WriteLine($"total {count} yaml not found.");
